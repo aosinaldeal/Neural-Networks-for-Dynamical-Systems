@@ -1,0 +1,52 @@
+========================================
+experiment_4
+========================================
+
+Hyperparameters
+----------------------------------------
+Epochs: 500
+Learning Rate: 0.0005
+Batch Size: 32
+Train Ratio: 0.8
+Split Method: random
+Random Seed: 57
+Optimizer: Adam
+Loss Function: MSELoss
+Hidden Layers: 3
+Neurons per Layer: 128
+Activation: Tanh
+
+Dataset
+----------------------------------------
+Mass 1: 1.0
+Mass 2: 1.0
+Length 1: 1.0
+Length 2: 1.25
+Gravity: 9.81
+Initial Theta 1: 1.0
+Initial Theta 2: 1.0
+Initial Omega 1: 0.0
+Initial Omega 2: 0.0
+Duration: 10
+Samples: 2000
+
+Results
+----------------------------------------
+MSE: 0.000079
+MAE: 0.006268
+Maximum Error: 0.034758
+R2 Score: 0.999808
+
+Theta 1 Metrics
+----------------------------------------
+MSE: 0.000127
+MAE: 0.008660
+Maximum Error: 0.034758
+R2 Score: 0.999657
+
+Theta 2 Metrics
+----------------------------------------
+MSE: 0.000030
+MAE: 0.003876
+Maximum Error: 0.027527
+R2 Score: 0.999959

@@ -1,0 +1,31 @@
+========================================
+experiment_05
+========================================
+
+Hyperparameters
+----------------------------------------
+Epochs: 500
+Learning Rate: 0.0005
+Batch Size: 32
+Train Ratio: 0.8
+Split Method: random
+Random Seed: 42
+Optimizer: Adam
+Loss Function: MSELoss
+Hidden Layers: 4
+Neurons per Layer: 64
+Activation: Tanh
+
+Dataset
+----------------------------------------
+Amplitude: 1
+Omega: 2
+Phase: 0
+Duration: 10
+Samples: 1000
+
+Results
+----------------------------------------
+MSE: 0.000110
+MAE: 0.008516
+Maximum Error: 0.027999

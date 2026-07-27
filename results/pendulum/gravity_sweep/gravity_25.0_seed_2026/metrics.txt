@@ -1,0 +1,33 @@
+========================================
+gravity_25.0_seed_2026
+========================================
+
+Hyperparameters
+----------------------------------------
+Epochs: 500
+Learning Rate: 0.0005
+Batch Size: 32
+Train Ratio: 0.8
+Split Method: random
+Random Seed: 2026
+Optimizer: Adam
+Loss Function: MSELoss
+Hidden Layers: 3
+Neurons per Layer: 128
+Activation: Tanh
+
+Dataset
+----------------------------------------
+Gravity: 25.0
+Length: 1.0
+Initial Angle: 1.0
+Initial Angular Velocity: 0.0
+Duration: 10
+Samples: 2000
+
+Results
+----------------------------------------
+MSE: 0.115993
+MAE: 0.176263
+Maximum Error: 1.077014
+R2 Score: 0.761752

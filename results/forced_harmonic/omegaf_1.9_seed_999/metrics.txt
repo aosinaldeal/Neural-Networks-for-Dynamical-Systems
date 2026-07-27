@@ -1,0 +1,35 @@
+========================================
+omegaf_1.9_seed_999
+========================================
+
+Hyperparameters
+----------------------------------------
+Epochs: 500
+Learning Rate: 0.0005
+Batch Size: 32
+Train Ratio: 0.8
+Split Method: random
+Random Seed: 999
+Optimizer: Adam
+Loss Function: MSELoss
+Hidden Layers: 3
+Neurons per Layer: 128
+Activation: Tanh
+
+Dataset
+----------------------------------------
+Amplitude: 1
+Omega: 2
+Beta: 1
+Phase: 0
+Forcing Amplitude: 0.5
+Forcing Omega: 1.9
+Duration: 10
+Samples: 1000
+
+Results
+----------------------------------------
+MSE: 0.000014
+MAE: 0.002898
+Maximum Error: 0.009168
+R2 Score: 0.999659

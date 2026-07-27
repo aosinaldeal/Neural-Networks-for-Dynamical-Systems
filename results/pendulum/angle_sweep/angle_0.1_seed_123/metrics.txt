@@ -1,0 +1,29 @@
+========================================
+angle_0.1_seed_123
+========================================
+
+Hyperparameters
+----------------------------------------
+Epochs: 500
+Learning Rate: 0.0005
+Batch Size: 32
+Train Ratio: 0.8
+Split Method: random
+Random Seed: 123
+Optimizer: Adam
+Loss Function: MSELoss
+Hidden Layers: 3
+Neurons per Layer: 128
+Activation: Tanh
+
+Dataset
+----------------------------------------
+Duration: 10
+Samples: 2000
+
+Results
+----------------------------------------
+MSE: 0.000009
+MAE: 0.002544
+Maximum Error: 0.012569
+R2 Score: 0.998203

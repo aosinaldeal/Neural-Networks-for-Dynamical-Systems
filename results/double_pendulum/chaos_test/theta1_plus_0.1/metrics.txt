@@ -1,0 +1,52 @@
+========================================
+theta1_plus_0.1
+========================================
+
+Hyperparameters
+----------------------------------------
+Epochs: 500
+Learning Rate: 0.0005
+Batch Size: 32
+Train Ratio: 0.8
+Split Method: random
+Random Seed: 57
+Optimizer: Adam
+Loss Function: MSELoss
+Hidden Layers: 3
+Neurons per Layer: 128
+Activation: Tanh
+
+Dataset
+----------------------------------------
+Mass 1: 1.0
+Mass 2: 1.0
+Length 1: 1.0
+Length 2: 1.0
+Gravity: 9.81
+Initial Theta 1: 1.1
+Initial Theta 2: 1.0
+Initial Omega 1: 0.0
+Initial Omega 2: 0.0
+Duration: 20
+Samples: 3000
+
+Results
+----------------------------------------
+MSE: 0.019185
+MAE: 0.111328
+Maximum Error: 0.396493
+R2 Score: 0.969921
+
+Theta 1 Metrics
+----------------------------------------
+MSE: 0.015290
+MAE: 0.107174
+Maximum Error: 0.294575
+R2 Score: 0.968047
+
+Theta 2 Metrics
+----------------------------------------
+MSE: 0.023081
+MAE: 0.115481
+Maximum Error: 0.396493
+R2 Score: 0.971795

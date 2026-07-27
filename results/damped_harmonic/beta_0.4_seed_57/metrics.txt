@@ -1,0 +1,32 @@
+========================================
+beta_0.4_seed_57
+========================================
+
+Hyperparameters
+----------------------------------------
+Epochs: 500
+Learning Rate: 0.0005
+Batch Size: 32
+Train Ratio: 0.8
+Split Method: random
+Random Seed: 57
+Optimizer: Adam
+Loss Function: MSELoss
+Hidden Layers: 3
+Neurons per Layer: 128
+Activation: Tanh
+
+Dataset
+----------------------------------------
+Amplitude: 1
+Omega: 2
+Phase: 0
+Beta: 0.4
+Duration: 10
+Samples: 1000
+
+Results
+----------------------------------------
+MSE: 0.000062
+MAE: 0.006554
+Maximum Error: 0.023805

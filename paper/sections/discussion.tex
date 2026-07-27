@@ -1,0 +1,81 @@
+\subsection{General performance of neural networks for dynamical systems}
+The results obtained throughout this work demonstrate that multilayer perceptrons (MLPs) are capable of accurately approximating a wide range of deterministic dynamical systems \cite{lagaris1998artificial, brunton2020machine}, from simple linear oscillators to highly nonlinear systems. However, the experiments also show that prediction accuracy is not determined exclusively by the presence of nonlinear terms in the governing equations. Instead, the difficulty of learning a dynamical trajectory depends mainly on the characteristics of the generated solution, including its temporal complexity, oscillation frequency, and sensitivity to initial conditions.
+
+The harmonic oscillator represented the simplest case studied, where the solution follows a regular periodic behaviour described by a sinusoidal function. As expected, the neural network achieved very low prediction errors, showing that a fixed-capacity MLP can accurately approximate smooth and repetitive trajectories. The introduction of damping and external forcing increased the complexity of the system by adding transient dynamics and additional oscillatory components. Nevertheless, the network maintained high accuracy for most explored parameter ranges, indicating that moderate increases in dynamical complexity do not necessarily prevent successful learning.
+
+The Duffing oscillator further supports this conclusion. Despite being governed by a nonlinear differential equation containing a cubic restoring term \cite{strogatz2015nonlinear}, the neural network was able to reproduce the system dynamics with high precision for the investigated parameter values. The absence of a clear relationship between the nonlinear parameters and prediction error suggests that nonlinearity itself is not the main factor limiting neural network performance. Instead, the complexity of the resulting trajectory appears to be more relevant than the mathematical form of the governing equation. A nonlinear system producing smooth and regular trajectories can remain easier to approximate than a system with simpler equations but more complex temporal behaviour.
+
+This observation is also supported by the simple pendulum experiments. Although the pendulum is a nonlinear system due to the presence of the sine restoring term, the neural network maintained accurate predictions for most tested configurations. The largest errors were associated mainly with parameters that increased the characteristic frequency of the motion, such as higher gravitational acceleration or shorter lengths, suggesting that faster temporal variations represent a more significant challenge than nonlinearity alone.
+
+The double pendulum provides an additional perspective on the capabilities and limitations of neural networks for dynamical modelling. Despite its chaotic nature, the network was still able to accurately approximate individual trajectories, as shown by the parameter sweeps performed over physical parameters and initial conditions. However, the chaos experiments revealed a different limitation: the difficulty of generalizing between trajectories generated from different initial conditions.
+
+In chaotic systems, small variations in the initial state can lead to significantly different future trajectories due to sensitive dependence on initial conditions \cite{lorenz1963deterministic, strogatz2015nonlinear}. Therefore, the increase in prediction error observed when evaluating the model on slightly different initial conditions does not indicate that the network cannot learn the double pendulum dynamics. Instead, it demonstrates that a model trained using only time as input,
+
+\begin{equation}
+   t \rightarrow x(t),
+ \label{eq:input_output}
+\end{equation}
+
+learns the specific trajectory associated with the training conditions rather than the complete physical system. Consequently, when evaluated on a different dynamical realization, the model is attempting to reproduce a trajectory that it was not trained to represent.
+
+Overall, these experiments indicate that the applicability of neural networks for dynamical systems is determined not simply by whether the system is linear or nonlinear, but by the properties of the resulting dynamics. Temporal complexity, oscillation frequency, and sensitivity to initial conditions play a more significant role in determining prediction performance. These results highlight both the potential of neural networks as approximators of physical trajectories and the importance of incorporating additional physical information when modelling complex dynamical systems.
+
+\subsection{Influence of temporal frequency and trajectory complexity}
+One of the main patterns observed throughout the experiments is that prediction accuracy is strongly influenced by the temporal characteristics of the trajectory. In particular, systems that exhibit faster oscillations or more rapidly changing dynamics tend to become more challenging for a fixed-capacity neural network \cite{cybenko1989approximation}, even when their governing equations remain relatively simple.
+
+This behaviour was first observed in the forced harmonic oscillator experiments. While the network achieved very low prediction errors for most forcing frequencies, the performance degraded when the excitation frequency increased beyond a certain range. Increasing the forcing frequency introduces faster oscillatory components into the solution, reducing the temporal scale over which the network must approximate changes in the signal. Since the model receives only time as input, it must represent increasingly rapid variations using the same fixed architecture, which can limit its approximation capability \cite{spectralbias2024}.
+
+A similar effect was observed in the simple pendulum experiments. For small oscillations, the natural frequency of the pendulum can be approximated as in Equation~\ref{eq:frequency}, where $g$ is the gravitational acceleration and $L$ is the pendulum length. Therefore, increasing $g$ or decreasing $L$ increases the characteristic frequency of the system. The gravity and length sweeps showed that configurations with larger frequencies generally produced higher prediction errors. For example, increasing the gravitational acceleration beyond the explored normal range caused a significant increase in error, while shorter pendulum lengths also resulted in less accurate predictions. These results suggest that the network is more sensitive to rapid temporal variations than to the physical origin of those variations.
+
+This relationship can also explain the behaviour observed in the forced oscillator and pendulum experiments where increasing frequency did not always lead to a monotonic increase in error. The difficulty of approximation depends not only on the frequency value itself but also on the complete structure of the trajectory. Factors such as transient components, amplitude, and the interaction between different oscillatory modes can influence how complex the resulting signal is for the neural network to approximate.
+
+The results obtained with the Duffing oscillator further reinforce this interpretation. Although the system contains nonlinear terms that modify the shape of the trajectory, the explored parameter variations did not produce a consistent increase in prediction error. This indicates that nonlinear behaviour alone does not necessarily create a difficult learning problem. Instead, the relevant factor is whether the nonlinearity generates complex temporal patterns that exceed the approximation capabilities of the model.
+
+Therefore, the experiments suggest that the difficulty of learning dynamical systems is closely related to the temporal complexity of their solutions. A system with a nonlinear governing equation can remain easy to approximate if its trajectory is smooth and regular, whereas a system with faster or more complex temporal variations may become challenging even without strong nonlinear effects. This highlights the importance of analysing the characteristics of the generated trajectory, rather than only the mathematical complexity of the underlying physical model, when evaluating neural network approaches for dynamical modelling
+
+\subsection{Limitations of purely data-driven dynamical modelling}
+Although the results demonstrate that neural networks can accurately approximate a wide range of dynamical systems, the experiments also reveal important limitations associated with purely data-driven approaches. The main limitation is that the model learns a mapping between the provided input and the observed trajectory, rather than explicitly learning the physical laws governing the system \cite{raissi2019physics}.
+
+In this work, the neural network receives only time as input and predicts the corresponding system state, as described in Equation~\ref{eq:input_output}.
+
+Therefore, the model is trained to approximate a specific solution generated under fixed physical parameters and initial conditions. While this approach is sufficient to reproduce individual trajectories with high accuracy, it does not provide the network with information about the underlying physical system, such as masses, lengths, gravitational acceleration, or initial conditions.
+
+This limitation becomes particularly evident in the double pendulum chaos experiments. The network successfully approximates the trajectory used during training, but its performance decreases when evaluated on a different trajectory generated from slightly modified initial conditions. This behaviour is expected in chaotic systems, where small differences in the initial state can lead to large deviations over time. The observed error increase is therefore not caused by an inability of the network to represent the dynamics, but by the fact that the model was not trained to represent the complete family of possible solutions.
+
+A similar limitation can be observed in the parameter sweeps performed throughout this work. When the network is trained and evaluated on the same physical configuration, it achieves very accurate predictions. However, the experiments were designed independently for each parameter value, meaning that each model only learned one specific dynamical regime. As a result, the trained networks cannot be expected to generalize automatically to unseen combinations of physical parameters.
+
+This distinction is important when considering the application of neural networks to physical modelling. A model that accurately reproduces a single trajectory does not necessarily represent a general surrogate model of the physical system. For applications requiring prediction across different operating conditions, the relevant physical parameters should be included as inputs, allowing the network to learn a broader representation of the system dynamics.
+
+For example, instead of learning only the input-output relation described in Equation~\ref{eq:input_output}, a more general formulation would be:
+\begin{equation}
+    (t,m,L,g,\theta_0,\omega_0) \rightarrow x(t),
+\end{equation}
+
+where the physical parameters and initial conditions are provided explicitly. This approach would allow the network to learn the relationship between the governing parameters and the resulting trajectories, improving its ability to interpolate between different dynamical configurations \cite{lu2021learning}.
+
+Therefore, while the results confirm the capability of neural networks as trajectory approximators, they also highlight the importance of distinguishing between trajectory fitting and physical system identification. Incorporating physical information into the learning process represents a promising direction for improving the reliability and generalization of neural network-based dynamical models.
+
+\subsection{Future improvements and physics-informed approaches}
+The results obtained in this work demonstrate the potential of neural networks for approximating dynamical systems, but they also highlight the limitations of purely data-driven approaches. In particular, the experiments show that a model trained only on observed trajectories can achieve excellent accuracy for specific configurations while having limited generalization capabilities when the underlying dynamics change. Future improvements should therefore focus on incorporating additional physical information into the learning process.
+
+One possible approach is the use of physics-informed neural networks (PINNs) \cite{raissi2019physics}, which incorporate the governing equations of the physical system directly into the training process. Unlike traditional neural networks, which minimize only the difference between predictions and observed data, PINNs include an additional physics-based loss term that penalizes violations of the differential equations describing the system.
+
+The loss function can therefore be expressed as:
+\begin{equation}
+{Loss} = {Loss}_{\text{data}} + {Loss}_{\text{physics}}
+\end{equation}
+
+where ${Loss}_{\text{data}}$ measures the difference between the predicted and actual trajectories, while ${Loss}_{\text{physics}}$ evaluates how well the prediction satisfies the underlying equations of motion. By combining experimental data with physical constraints, the model is encouraged to learn the actual dynamics rather than only fitting the available trajectories.
+
+Another possible improvement would be to include physical parameters and initial conditions as inputs to the neural network. In this work, each experiment required training a separate model for each set of parameters. A more general model could instead learn a mapping of the form:
+\begin{equation}
+    (t, p_1, p_2, ...,p_n) \rightarrow x(t),
+\end{equation}
+
+where $p_i$ represents relevant physical parameters such as mass, length, gravity, damping coefficient, or initial conditions. This would allow the network to learn a continuous representation of the system and potentially predict trajectories for previously unseen configurations.
+
+Additionally, the architecture of the neural network could be adapted depending on the characteristics of the system being modelled. The multilayer perceptron used in this work approximates the trajectory as a static function of time. However, dynamical systems naturally contain temporal dependencies, especially when predicting long-term evolution. Recurrent architectures, such as long short-term memory networks (LSTMs) or gated recurrent units (GRUs) \cite{hochreiter1997long, cho2014learning}, could introduce memory into the model and improve the representation of sequential information. Another promising direction is the use of Neural Ordinary Differential Equations (Neural ODEs) \cite{chen2018neural}, where the neural network directly learns the evolution rule of the system instead of approximating the final trajectory.
+
+For chaotic systems, such as the double pendulum, perfect long-term prediction remains fundamentally limited due to sensitive dependence on initial conditions \cite{lorenz1963deterministic}. Even a physically accurate model cannot overcome the intrinsic unpredictability caused by chaotic divergence. However, incorporating the governing equations and physical parameters can improve short-term prediction accuracy and allow the model to reproduce the underlying dynamics more reliably.
+
+Overall, the experiments suggest that the future of neural network-based dynamical modelling lies not in replacing physical knowledge with data, but in combining both approaches. Data-driven methods provide flexibility and approximation capabilities, while physical information provides constraints that improve generalization, interpretability, and reliability.
