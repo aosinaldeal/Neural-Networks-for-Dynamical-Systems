@@ -1,5 +1,9 @@
 # Neural Networks for Dynamical Systems
 
+<p align="center">
+  <img src="results/duffing/alpha_sweep/alpha_1.5_seed_123/duffing_prediction.png" width="800">
+</p>
+
 ## Overview
 
 This repository investigates whether feedforward neural networks can learn the behavior of classical dynamical systems directly from simulated data.

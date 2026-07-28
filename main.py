@@ -1,1 +1,0 @@
-print("Physics AI Research")

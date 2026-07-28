@@ -1,6 +1,5 @@
-numpy
-matplotlib
-scipy
-pandas
-torch
-jupyter
+numpy>=1.26
+matplotlib>=3.8
+scipy>=1.11
+pandas>=2.0
+torch>=2.0
