@@ -4,15 +4,15 @@ import torch
 import matplotlib.pyplot as plt
 import numpy as np
 
-import config
+from src import config
 
-from data.dataset import (
+from src.data.dataset import (
     numpy_to_tensor,
     split_dataset,
 )
 
-from models.neural_network import NeuralNetwork
-from utils.model_io import load_model
+from src.models.neural_network import NeuralNetwork
+from src.utils.model_io import load_model
 
 
 # ==========================================
@@ -20,22 +20,22 @@ from utils.model_io import load_model
 # ==========================================
 
 if config.TYPE == "harmonic":
-    from physics.harmonic import generate_dataset
+    from src.physics.harmonic import generate_dataset
 
 elif config.TYPE == "damped_harmonic":
-    from physics.damped_harmonic import generate_dataset
+    from src.physics.damped_harmonic import generate_dataset
 
 elif config.TYPE == "forced_harmonic":
-    from physics.forced_harmonic import generate_dataset
+    from src.physics.forced_harmonic import generate_dataset
 
 elif config.TYPE == "duffing":
-    from physics.duffing import generate_duffing_motion
+    from src.physics.duffing import generate_duffing_motion
 
 elif config.TYPE == "pendulum":
-    from physics.pendulum import generate_pendulum_motion
+    from src.physics.pendulum import generate_pendulum_motion
 
 elif config.TYPE == "double_pendulum":
-    from physics.double_pendulum import simulate_double_pendulum
+    from src.physics.double_pendulum import simulate_double_pendulum
 
 else:
     raise ValueError(f"Unknown TYPE: {config.TYPE}")

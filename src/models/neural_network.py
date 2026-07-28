@@ -1,5 +1,5 @@
 import torch.nn as nn
-import config
+from src import config
 
 
 class NeuralNetwork(nn.Module):
