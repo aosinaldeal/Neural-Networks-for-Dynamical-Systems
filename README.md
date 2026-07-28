@@ -127,7 +127,7 @@ python -m evaluation.evaluate
 ## Configuration
 
 Experiments can be configured by modifying:
-(src/config.py)
+[src/config.py](src/config.py)
 
 The main parameters are:
 
