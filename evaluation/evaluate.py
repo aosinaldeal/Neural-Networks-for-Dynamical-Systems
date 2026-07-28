@@ -12,7 +12,7 @@ from data.dataset import (
 )
 
 from models.neural_network import NeuralNetwork
-from models.utils import load_model
+from utils.model_io import load_model
 
 
 # ==========================================

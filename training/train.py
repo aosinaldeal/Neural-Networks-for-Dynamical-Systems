@@ -3,6 +3,7 @@ import torch.nn as nn
 import config
 import numpy as np
 import random
+import os
 
 
 from data.dataset import (
@@ -10,13 +11,12 @@ from data.dataset import (
     split_dataset,
     create_dataloader
 )
-from models.utils import plot_loss
+from utils.plotting import plot_loss
+from utils.model_io import save_model
 from models.neural_network import NeuralNetwork
 
 
-# ==========================================================
 # Physics system
-# ==========================================================
 
 if config.TYPE == "harmonic":
     from physics.harmonic import generate_dataset
@@ -40,9 +40,7 @@ else:
     raise ValueError(f"Unknown TYPE: {config.TYPE}")
 
 
-# ==========================================================
 # Training
-# ==========================================================
 
 def train(
     experiment=None,
@@ -53,20 +51,6 @@ def train(
     seed=None,
     delta=None
 ):
-
-    random.seed(seed)
-    np.random.seed(seed)
-
-    torch.manual_seed(seed)
-
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)
-
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-
-    torch.use_deterministic_algorithms(True)
 
 
 
@@ -91,19 +75,28 @@ def train(
     if delta is None:
         delta = config.DUFFING_DELTA
 
+    random.seed(seed)
+    np.random.seed(seed)
+    
     torch.manual_seed(seed)
 
-    # ------------------------------------------------------
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+    
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    
+    torch.use_deterministic_algorithms(True)
+
+
     # Device
-    # ------------------------------------------------------
 
     device = torch.device(
         "cuda" if torch.cuda.is_available() else "cpu"
     )
 
-    # ------------------------------------------------------
     # Generate dataset
-    # ------------------------------------------------------
 
     if config.TYPE == "duffing":
         
@@ -166,18 +159,15 @@ def train(
             samples=config.SAMPLES
         )
 
-    # ------------------------------------------------------
+
     # Convert to tensors
-    # ------------------------------------------------------
 
     time_tensor, position_tensor = numpy_to_tensor(
         time,
         position
     )
 
-    # ------------------------------------------------------
     # Split dataset
-    # ------------------------------------------------------
 
     (
         train_time,
@@ -191,9 +181,7 @@ def train(
         method=config.SPLIT_METHOD,
     )
 
-    # ------------------------------------------------------
     # DataLoader
-    # ------------------------------------------------------
 
     train_loader = create_dataloader(
         train_time,
@@ -201,9 +189,7 @@ def train(
         batch_size=config.BATCH_SIZE,
     )
 
-    # ------------------------------------------------------
     # Model
-    # ------------------------------------------------------
 
     model = NeuralNetwork().to(device)
 
@@ -214,9 +200,7 @@ def train(
         lr=config.LEARNING_RATE,
     )
 
-    # ------------------------------------------------------
     # Training
-    # ------------------------------------------------------
 
     model.train()
 
@@ -230,9 +214,7 @@ def train(
 
         running_loss = 0.0
 
-        # ----------------------------
-        # Training
-        # ----------------------------
+        # Training        
 
         for inputs, targets in train_loader:
 
@@ -258,9 +240,8 @@ def train(
 
         train_losses.append(average_loss)
 
-        # ----------------------------
+        
         # Evaluation
-        # ----------------------------
 
         model.eval()
 
@@ -287,9 +268,7 @@ def train(
                 f"Test Loss: {test_loss.item():.6f}"
             )
 
-    # ------------------------------------------------------
     # Final evaluation
-    # ------------------------------------------------------
 
     model.eval()
 
@@ -306,25 +285,9 @@ def train(
         f"\nFinal Test Loss: {test_loss.item():.6f}"
     )
 
-    # ------------------------------------------------------
+
     # Save loss
-    # ------------------------------------------------------
     
-    import os
-
-
-    loss_folder = os.path.join(
-        "results",
-        config.TYPE,
-        config.SWEEP_NAME,
-        experiment_name,
-    )
-
-    os.makedirs(
-        loss_folder,
-        exist_ok=True,
-    )
-
     loss_path = os.path.join(
     "results",
     config.TYPE,
@@ -347,16 +310,17 @@ def train(
         ),
 )
 
-    # ------------------------------------------------------
     # Save model
-    # ------------------------------------------------------
-
-    from models.utils import save_model
-
+    
     save_model(
         model,
         f"{config.TYPE}-{experiment_name}",
     )
+
+    return {
+    "train_loss": train_losses[-1],
+    "test_loss": test_loss.item()
+}
 
 
 if __name__ == "__main__":

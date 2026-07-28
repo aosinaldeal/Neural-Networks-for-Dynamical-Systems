@@ -18,6 +18,7 @@ venv/
 
 # Windows
 Thumbs.db
+desktop.ini
 
 # LaTeX auxiliary files
 *.aux
@@ -34,3 +35,6 @@ Thumbs.db
 
 # Temporary files
 *.tmp
+
+# Trained models
+models/saved/

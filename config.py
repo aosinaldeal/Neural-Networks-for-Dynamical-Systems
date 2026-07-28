@@ -71,11 +71,13 @@ INITIAL_OMEGA_2 = 0.0
 # ========================================
 
 SWEEP_NAME = "duration_sweep"
-EXPERIMENT_NAME = "experiment_21"
+EXPERIMENT_NAME = "experiment_8"
 SPLIT_METHOD = "random"
-TYPE = "pendulum"
+TYPE = "double_pendulum"
 
 if TYPE == "double_pendulum":
     OUTPUT_DIM = 2
 else:
     OUTPUT_DIM = 1
+
+
