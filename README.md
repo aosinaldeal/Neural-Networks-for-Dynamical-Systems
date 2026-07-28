@@ -122,9 +122,21 @@ Evaluate a trained model:
 python -m evaluation.evaluate
 ```
 
-The physical system, neural network configuration and experiment parameters can be modified through `config.py`.
-
 ---
+
+## Configuration
+
+Experiments can be configured by modifying:
+(src/config.py)
+
+The main parameters are:
+
+- `TYPE`: physical system to simulate
+- `EPOCHS`: training epochs
+- `LEARNING_RATE`: optimizer learning rate
+- `SAMPLES`: generated data points
+- `DURATION`: simulation time
+
 
 ## Scientific Paper
 
