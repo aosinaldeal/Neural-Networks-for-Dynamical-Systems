@@ -74,7 +74,7 @@ Default configuration:
 
 The output dimension is automatically adapted depending on the physical system. For example:
 
-* Single-variable systems → one output ($x(t)$ or $\theta(t)$)
+* Single-variable systems → one output ($x(t)$ or $\theta$$(t)$)
 * Double Pendulum → two outputs ($\theta_1(t)$ and $\theta_2(t)$)
 
 ---
