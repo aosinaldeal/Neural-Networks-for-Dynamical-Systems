@@ -25,7 +25,6 @@ ACTIVATION = "Tanh"
 
 DURATION = 30
 SAMPLES = 6000
-SPLIT_METHOD = "random"
 
 # ========================================
 # System selection
@@ -33,8 +32,18 @@ SPLIT_METHOD = "random"
 
 TYPE = "pendulum"
 
+    # Available:
+    # harmonic
+    # damped_harmonic
+    # forced_harmonic
+    # duffing
+    # pendulum
+    # double_pendulum
+
+
 SWEEP_NAME = "test"
 EXPERIMENT_NAME = "experiment_21"
+SPLIT_METHOD = "random"
 
 # ========================================
 # Oscillators
