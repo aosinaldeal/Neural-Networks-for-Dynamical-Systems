@@ -25,7 +25,7 @@ ACTIVATION = "Tanh"
 
 DURATION = 30
 SAMPLES = 6000
-
+SPLIT_METHOD = "random"
 
 # ========================================
 # System selection
@@ -33,9 +33,8 @@ SAMPLES = 6000
 
 TYPE = "pendulum"
 
-SWEEP_NAME = "duration_sweep"
+SWEEP_NAME = "test"
 EXPERIMENT_NAME = "experiment_21"
-
 
 # ========================================
 # Oscillators

@@ -1,7 +1,7 @@
 import os
 import csv
 
-import config
+from src import config
 
 
 def save_result(
