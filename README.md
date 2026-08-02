@@ -4,6 +4,10 @@
   <img src="results/duffing/alpha_sweep/alpha_1.5_seed_123/duffing_prediction.png" width="800">
 </p>
 
+*A computational study of neural network approximation of deterministic and chaotic physical systems.*
+
+---
+
 ## Overview
 
 This repository investigates whether feedforward neural networks can learn the behavior of classical dynamical systems directly from simulated data.
@@ -31,7 +35,7 @@ The repository currently includes simulations and neural network models for:
 * Simple Pendulum
 * Double Pendulum
 
-Each system is implemented independently, allowing experiments under different physical parameters.
+Each system is implemented independently, allowing experiments under different physical parameters and dynamical regimes.
 
 ---
 
@@ -39,13 +43,39 @@ Each system is implemented independently, allowing experiments under different p
 
 For each physical system:
 
-1. Generate a reference dataset using numerical or analytical solutions.
-2. Split the dataset into training and testing subsets.
+1. Generate a reference dataset using analytical solutions or numerical integration.
+2. Convert the generated data into training and testing datasets.
 3. Train a fully connected neural network (MLP).
 4. Evaluate prediction accuracy using multiple performance metrics.
-5. Analyze how changes in physical parameters affect the model's performance.
+5. Analyze the effect of physical parameters through parameter sweeps.
 
-The study includes parameter sweeps for several systems in order to investigate the robustness of the neural network under different dynamical regimes.
+The study includes systematic experiments where physical parameters are modified to investigate the robustness and generalization capabilities of the neural network.
+
+---
+
+## Neural Network Architecture
+
+The model used in this study is a fully connected feedforward neural network (Multilayer Perceptron, MLP).
+
+The architecture is configurable through `src/config.py`, including:
+
+* Number of hidden layers
+* Number of neurons per layer
+* Activation function
+* Output dimension
+
+Default configuration:
+
+* Hidden layers: 3
+* Neurons per layer: 128
+* Activation function: Tanh
+* Optimizer: Adam
+* Loss function: Mean Squared Error (MSE)
+
+The output dimension is automatically adapted depending on the physical system. For example:
+
+* Single-variable systems → one output ($x(t)$ or $\theta(t)$)
+* Double Pendulum → two outputs ($\theta_1(t)$ and $\theta_2(t)$)
 
 ---
 
@@ -58,7 +88,12 @@ The following metrics are used throughout the project:
 * Maximum Absolute Error
 * Coefficient of Determination ($R^2$)
 
-Training history and prediction figures are automatically generated for every experiment.
+For every experiment, the pipeline automatically generates:
+
+* Prediction plots
+* Absolute error plots
+* Training history plots
+* Numerical evaluation reports
 
 ---
 
@@ -66,16 +101,18 @@ Training history and prediction figures are automatically generated for every ex
 
 ```text
 .
-├── data/               Dataset utilities
-├── evaluation/         Model evaluation
-├── experiments/        Parameter sweeps and analysis
-├── models/             Neural network implementation
-├── paper/              LaTeX source and PDF of the paper
-├── physics/            Physical system simulations
-├── results/            Experimental results
-├── training/           Model training
-├── config.py           Global configuration
-├── main.py
+├── src/
+│   ├── data/             Dataset generation and processing
+│   ├── models/           Neural network architectures
+│   ├── utils/            Metrics, plotting and reporting utilities
+│   ├── train.py          Training pipeline
+│   ├── evaluate.py       Evaluation pipeline
+│   └── config.py         Experiment configuration
+│
+├── experiments/          Parameter sweeps and analysis scripts
+├── results/              Generated experimental results
+├── paper/                Scientific paper (LaTeX source and PDF)
+├── requirements.txt
 └── README.md
 ```
 
@@ -88,6 +125,7 @@ Training history and prediction figures are automatically generated for every ex
 * NumPy
 * SciPy
 * Matplotlib
+* Pandas
 
 ---
 
@@ -97,6 +135,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/aosinaldeal/Neural-Networks-for-Dynamical-Systems.git
+
 cd Neural-Networks-for-Dynamical-Systems
 ```
 
@@ -110,45 +149,80 @@ pip install -r requirements.txt
 
 ## Running Experiments
 
-Train a model:
+### Train a model
 
 ```bash
-python -m training.train
+python -m src.train
 ```
 
-Evaluate a trained model:
+### Evaluate a trained model
 
 ```bash
-python -m evaluation.evaluate
+python -m src.evaluate
+```
+
+The selected physical system and experiment parameters can be modified in:
+
+```text
+src/config.py
 ```
 
 ---
 
 ## Configuration
 
-Experiments can be configured by modifying:
-[src/config.py](src/config.py)
+Experiments are controlled through:
 
-The main parameters are:
+```text
+src/config.py
+```
 
-- `TYPE`: physical system to simulate
-- `EPOCHS`: training epochs
-- `LEARNING_RATE`: optimizer learning rate
-- `SAMPLES`: generated data points
-- `DURATION`: simulation time
+Main parameters include:
 
+* `TYPE`: physical system to simulate
+* `EPOCHS`: number of training epochs
+* `LEARNING_RATE`: optimizer learning rate
+* `SAMPLES`: number of generated data points
+* `DURATION`: simulation time
+* `HIDDEN_LAYERS`: number of hidden neural network layers
+* `NEURONS_PER_LAYER`: neurons in each hidden layer
+* `ACTIVATION`: neural network activation function
+
+---
+
+## Reproducibility
+
+All experiments are designed to be reproducible.
+
+The configuration file controls:
+
+* Physical parameters
+* Neural network hyperparameters
+* Dataset generation
+* Train/test splitting
+* Random seeds
+
+Each experiment automatically stores:
+
+* Trained model weights
+* Training history
+* Prediction figures
+* Error analysis
+* Evaluation metrics
+
+---
 
 ## Scientific Paper
 
-The complete paper can be found here:
+The complete scientific paper can be found here:
 
 **[📄 Neural Networks for Dynamical Systems (PDF)](paper/paper.pdf)**
 
-It describes:
+The paper describes:
 
 * The theoretical background of each dynamical system.
 * The neural network architecture.
-* Experimental methodology.
+* The experimental methodology.
 * Parameter sweep analyses.
 * Results and discussion.
 * Conclusions and future work.
@@ -164,7 +238,7 @@ Possible extensions of this project include:
 * Neural Operators.
 * Additional chaotic systems.
 * Long-term trajectory prediction.
-* Generalization across physical systems.
+* Generalization across different physical systems.
 
 ---
 
