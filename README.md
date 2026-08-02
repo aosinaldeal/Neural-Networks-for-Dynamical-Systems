@@ -169,6 +169,39 @@ src/config.py
 
 ---
 
+## Experiments
+
+This directory contains scripts used to perform parameter sweeps and statistical analysis.
+
+Experiments are grouped by physical system:
+
+- double_pendulum
+- duffing
+- pendulum
+
+Each experiment trains multiple models with different physical parameters and random seeds.
+
+The generated results are stored in the `results/` directory.
+
+---
+
+## Results Organization
+
+The `results/` directory contains the outputs generated during training and evaluation.
+
+Results are organized by physical system:
+
+```text
+results/
+├── harmonic/
+├── damped_harmonic/
+├── forced_harmonic/
+├── duffing/
+├── pendulum/
+└── double_pendulum/
+
+---
+
 ## Configuration
 
 Experiments are controlled through:
